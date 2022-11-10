@@ -55,11 +55,11 @@ python main.py -m i -s 'save_models/xlm-roberta-large_maxEpoch1_batchSize32_stil
 ```
 python main.py -m e -c base_config
 ```
+- 실행 후 반복 횟수 입력
 ### Streamlit
 ```
 streamlit run app.py
 ```
-- 실행 후 반복 횟수 입력
 ---
 # 결과 (14팀 중 1위)
 ![1등 먹었닭](https://user-images.githubusercontent.com/51015187/200264645-69841882-0ee7-4444-9d71-364238bb5809.png)
