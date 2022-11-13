@@ -1,3 +1,5 @@
+import mlflow
+import mlflow.pytorch
 import pytorch_lightning as pl
 import torch
 from pytorch_lightning.loggers import WandbLogger
@@ -14,6 +16,7 @@ def train(args, conf):
     project_name = conf.wandb.project
     dataloader, model = create_instance.new_instance(conf)  # 함수화로 변경
     wandb_logger = WandbLogger(project=project_name)
+    mlflow.pytorch.autolog()    # mlflow
 
     save_path = f"{conf.path.save_path}{conf.model.model_name}_maxEpoch{conf.train.max_epoch}_batchSize{conf.train.batch_size}_{wandb_logger.experiment.name}/"
     trainer = pl.Trainer(
@@ -38,7 +41,8 @@ def train(args, conf):
         ],
     )
 
-    trainer.fit(model=model, datamodule=dataloader)
+    with mlflow.start_run() as run:
+        trainer.fit(model=model, datamodule=dataloader)
     trainer.test(model=model, datamodule=dataloader)
     wandb.finish()
 
